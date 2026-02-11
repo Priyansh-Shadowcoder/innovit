@@ -2,14 +2,12 @@ from flask import Flask, render_template, request, redirect, flash
 from flask import jsonify 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
-from google import genai
 from openai import OpenAI
 from flask import session
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
-# client = genai.Client(api_key = "AIzaSyDikwN4msWgVi9XqoX1jH3Dt2pgGQs0cFE")
 client = OpenAI(
   base_url="https://openrouter.ai/api/v1",
   api_key="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", 
@@ -305,4 +303,5 @@ def get_bot_response():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+
     app.run(debug = True)
