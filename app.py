@@ -300,8 +300,11 @@ def get_bot_response():
         print(f"OpenRouter Error: {e}")
         return jsonify({"response": "I'm having a connection issue. Please try again."})
 
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
+with app.app_context():
+    db.create_all()
+    print("Database tables created successfully!")
 
-    app.run(debug = True)
+if __name__ == "__main__":
+    app.run(debug=True)
+  
+
