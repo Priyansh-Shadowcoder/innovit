@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Gratitude Journal | Mindful Space</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-teal: #7fb3ad;
+            --soft-gold: #e6be8a;
+            --bg-cream: #f9f7f2;
+            --text-gray: #4a4a4a;
+            --primary-blue: #7fb3ad;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+
+        .main-header {
+            width: 100%;
+            background-color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .main-header h1 {
+            font-family: 'Trajan', serif;
+            margin: 0;
+            color: var(--primary-blue);
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .container-main {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            flex: 1;
+        }
+
+        h2 {
+            color: var(--primary-teal);
+            text-align: center;
+        }
+
+
+        .meditation-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f0f7f6;
+            border-radius: 15px;
+        }
+
+        .circle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            width: 150px;
+        }
+
+        .breathing-circle {
+            background-color: var(--primary-teal);
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            animation: breath 8s infinite ease-in-out;
+            opacity: 0.7;
+        }
+
+        @keyframes breath {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(3.5);
+            }
+        }
+
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background-color: var(--primary-teal);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #6a9b95;
+        }
+
+        .benefit-card {
+            background: #fffdf9;
+            border-left: 4px solid var(--soft-gold);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .main-footer {
+            background-color: #ffffff;
+            padding: 40px 0 20px 0;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <style>
+        /* --- AI BOT CUSTOM STYLES --- */
+        :root {
+            --bot-color: #0d6efd;
+            /* Matching your Bootstrap Primary color */
+        }
+
+        .bot-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        /* The Animated Icon */
+        .bot-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bot-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .bot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Blink Animation */
+        .eyes {
+            display: flex;
+            gap: 6px;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        /* Pulse Effect */
+        .bot-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--bot-color);
+            opacity: 0.4;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Chat Window Hidden State */
+        .chat-popup {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .chat-popup.active {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-popup-header {
+            background: var(--bot-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .chat-popup-body {
+            height: 250px;
+            padding: 15px;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .chat-popup-footer {
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- END BOT STYLES --- */
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <h1>YOUR GRATITUDE SPACE</h1>
+        <p class="mb-0">Taking a moment to appreciate the small things can change your entire day.</p>
+    </header>
+
+    <div class="container container-main">
+
+        <section class="journal-section">
+            <h2>What are you grateful for today?</h2>
+            <p class="text-center">Try to list three specific things. Instead of just "family," try "the way my sister
+                made me laugh at breakfast."</p>
+            <textarea id="journalEntry" placeholder="Today, I am thankful for..."></textarea>
+            <button onclick="saveEntry()">Save My Reflection</button>
+            <p id="saveMessage"
+                style="text-align: center; color: var(--primary-teal); display: none; margin-top: 15px;">Entry saved to
+                your heart (and browser)!</p>
+        </section>
+
+        <section class="info-section mt-5 pt-4 border-top">
+            <h2>Why Practice Gratitude?</h2>
+            <p class="text-center">Gratitude journaling is a scientifically proven tool to rewire your brain for
+                happiness.</p>
+
+            <div class="benefit-card">
+                <strong>🧠 Rewires the Brain:</strong> Regular practice strengthens neural pathways associated with
+                optimism.
+            </div>
+
+            <div class="benefit-card">
+                <strong>🌙 Better Sleep:</strong> Writing before bed helps quiet the mind and reduces nighttime
+                rumination.
+            </div>
+
+            <div class="benefit-card">
+                <strong>🛡️ Emotional Resilience:</strong> Build a "psychological buffer" to handle stress more
+                effectively.
+            </div>
+        </section>
+    </div>
+    <div class="bot-wrapper">
+        <div class="chat-popup" id="botChatWindow">
+            <div class="chat-popup-header">AI Therapist 👨🏻‍⚕️</div>
+            <div class="chat-popup-body" id="chatHistory">
+                <p><strong>Bot:</strong> Hello! I am your AI assistant. How are you feeling today?</p>
+            </div>
+            <div class="chat-popup-footer">
+                <input type="text" class="form-control form-control-sm" placeholder="Say something..."
+                    onkeypress="handleBotKey(event)">
+            </div>
+        </div>
+
+        <div class="bot-icon" onclick="toggleBotChat()">
+            <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold">About MINDSET ARCHITECTURE</h5>
+                    <p class="small text-muted">Empowering individuals to take control of their health through
+                        technology and data-driven insights.</p>
+                </div>
+                <div class="col-md-4 mb-4 text-center">
+                    <h5 class="fw-bold">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted small">Privacy Policy</a></li>
+                        <li><a href="#" class="text-muted small">Terms of Service</a></li>
+                        <li><a href="#" class="text-muted small">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4 text-md-end">
+                    <h5 class="fw-bold">Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#" class="text-primary me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-info me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-danger"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center text-muted small mb-0">&copy; 2026 Your Personal MINDSET ARCHITECTURE. All rights
+                reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+
+
+        function saveEntry() {
+            const entry = document.getElementById('journalEntry').value;
+            if (entry.trim() !== "") {
+                document.getElementById('saveMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('saveMessage').style.display = 'none';
+                    document.getElementById('journalEntry').value = '';
+                }, 3000);
+            } else {
+                alert("Please write something before saving!");
+            }
+        }
+    </script>
+    <script>
+        // Toggle the Chat Box
+        function toggleBotChat() {
+            const chatWindow = document.getElementById('botChatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        // Prevent closing when clicking inside the input
+        function handleBotKey(event) {
+            if (event.key === 'Enter' && event.target.value.trim() !== "") {
+                const history = document.getElementById('chatHistory');
+                history.innerHTML += `<p class="text-end"><strong>You:</strong> ${event.target.value}</p>`;
+                event.target.value = "";
+                history.scrollTop = history.scrollHeight;
+            }
+            event.stopPropagation();
+        }
+    </script>
+</body>
+
+</html>

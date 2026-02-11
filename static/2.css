@@ -1,0 +1,133 @@
+:root {
+    --deep-purple: #6c5ce7; 
+    --soft-purple: #a29bfe;
+    --bright-blue: #00cec9;
+    --silver: #dfe6e9;
+    --dark-text: #2d3436;
+} 
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5;
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+
+header {
+    background: linear-gradient(45deg, var(--deep-purple), var(--bright-blue));
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+    border-bottom: 8px solid var(--silver);
+}
+
+h1 {
+    font-family: 'Spicy Rice', cursive;
+    font-size: 3rem;
+    margin-top: 15px;
+    animation: slideUp 1s ease-out;
+}
+
+
+.main-sticker {
+    width: 250px;
+    filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.1));
+    animation: float 3s ease-in-out infinite;
+}
+
+.small-sticker {
+    width: 120px;
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+.container {
+    max-width: 900px;
+    margin: -40px auto 40px;
+    padding: 0 20px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 8px 8px 0px var(--soft-purple);
+    border: 2px solid var(--silver);
+    animation: slideUp 1.2s ease-out; /* Pure CSS entry animation */
+}
+
+.title-purple { color: var(--deep-purple); }
+.title-blue { color: var(--bright-blue); }
+.title-silver { color: #636e72; }
+
+
+.issue-grid {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.issue-item {
+    flex: 1;
+    min-width: 200px;
+    background: var(--silver);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.issue-item:hover {
+    transform: scale(1.05);
+    background: var(--soft-purple);
+    color: white;
+}
+
+.sticker-right {
+    float: right;
+    margin-left: 15px;
+}
+
+
+.check-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.check-list li {
+    margin: 10px 0;
+    padding-left: 30px;
+    position: relative;
+}
+
+.check-list li::before {
+    content: '💜';
+    position: absolute;
+    left: 0;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--deep-purple);
+    font-weight: bold;
+}

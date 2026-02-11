@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talk To Professional | Therapy & Healing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='3.css') }}">
+    <style>
+        /* --- AI BOT CUSTOM STYLES --- */
+        :root {
+            --bot-color: #0d6efd;
+            /* Matching your Bootstrap Primary color */
+        }
+
+        .bot-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        /* The Animated Icon */
+        .bot-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bot-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .bot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Blink Animation */
+        .eyes {
+            display: flex;
+            gap: 6px;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        /* Pulse Effect */
+        .bot-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--bot-color);
+            opacity: 0.4;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Chat Window Hidden State */
+        .chat-popup {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .chat-popup.active {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-popup-header {
+            background: var(--bot-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .chat-popup-body {
+            height: 250px;
+            padding: 15px;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .chat-popup-footer {
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- END BOT STYLES --- */
+    </style>
+</head>
+<body>
+
+    <div class="sticker s1">🌈</div>
+    <div class="sticker s2">✨</div>
+    <div class="sticker s3">🧠</div>
+    <div class="sticker s4">💜</div>
+    <div class="sticker s5">☁️</div>
+
+    <header>
+        <div class="hero-text">
+            <h1>Talk To Professional</h1>
+            <p>Expert therapists at your fingertips. Safe. Confidential. Supportive.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="therapist-grid">
+            <div class="card">
+                <img src="{{ url_for('static', filename='Dr.Sarah.png') }}" alt="Dr. Sarah">
+                <h3>Dr. Sarah Jenkins</h3>
+                <span class="tag">Anxiety Expert</span>
+                <p>Helping you navigate through life's toughest storms with proven CBT techniques.</p>
+                <a href="/schedule" class="btn">Book Session</a>
+            </div>
+
+            <div class="card">
+                <img src="{{ url_for('static', filename='Dr.Aman.png') }}" alt="Dr. Aman">
+                <h3>Dr. Aman Verma</h3>
+                <span class="tag">Relationships</span>
+                <p>Focusing on harmony and work-life balance through empathetic listening.</p>
+                <a href="/schedule" class="btn">Book Session</a>
+            </div>
+
+            <div class="card">
+                <img src="{{ url_for('static', filename='Dr.Elena.png') }}" alt="Dr. Elena">
+                <h3>Dr. Elena Rodriguez</h3>
+                <span class="tag">Teen Specialist</span>
+                <p>Dedicated to helping the younger generation find their voice and confidence.</p>
+                <a href="/schedule" class="btn">Book Session</a>
+            </div>
+        </section>
+    </main>
+    <div class="bot-wrapper">
+        <div class="chat-popup" id="botChatWindow">
+            <div class="chat-popup-header">AI Therapist 👨🏻‍⚕️</div>
+            <div class="chat-popup-body" id="chatHistory">
+                <p><strong>Bot:</strong> Hello! I am your AI assistant. How are you feeling today?</p>
+            </div>
+            <div class="chat-popup-footer">
+                <input type="text" class="form-control form-control-sm" placeholder="Say something..."
+                    onkeypress="handleBotKey(event)">
+            </div>
+        </div>
+
+        <div class="bot-icon" onclick="toggleBotChat()">
+            <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Talk To Professional. Healing hearts, one conversation at a time.</p>
+    </footer>
+    <script>
+        // Toggle the Chat Box
+        function toggleBotChat() {
+            const chatWindow = document.getElementById('botChatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        // Prevent closing when clicking inside the input
+        function handleBotKey(event) {
+            if (event.key === 'Enter' && event.target.value.trim() !== "") {
+                const history = document.getElementById('chatHistory');
+                history.innerHTML += `<p class="text-end"><strong>You:</strong> ${event.target.value}</p>`;
+                event.target.value = "";
+                history.scrollTop = history.scrollHeight;
+            }
+            event.stopPropagation();
+        }
+    </script>
+
+</body>
+</html>
+
+

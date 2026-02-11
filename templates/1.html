@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Health Accessibility Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='1.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg sticky-top bg-light border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">HEALTH PORTAL</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Talk to an Expert!</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+  <div class="content-wrapper">
+    
+    <div class="background">
+      <div class="cloud cloud1"></div>
+      <div class="cloud cloud2"></div>
+      <div class="cloud cloud3"></div>
+      <div class="star star1"></div>
+      <div class="star star2"></div>
+      <div class="star star3"></div>
+    </div>
+  
+
+    <div class="login-container">
+      <h1><b>Welcome</b></h1>
+      <p>"Your mental wellness matters"</p>
+
+      <form method="POST" action="/login">
+        <input type="text" placeholder="Username" name="user" required>
+        <input type="password" placeholder="Password" name="pass" required>
+
+        <div class="forgot">
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
+
+      <div class="signup">
+        <p>Don't have an account?</p>
+        <a href="/">Create Account</a>
+      </div>
+
+      <span class="helper-text">
+        Take a deep breath 😊 You're safe here.
+      </span>
+    </div>
+
+  </div>
+  <div class="bot-wrapper">
+        <div class="chat-popup" id="botChatWindow">
+            <div class="chat-popup-header">AI Therapist 👨🏻‍⚕️</div>
+            <div class="chat-popup-body" id="chatHistory">
+                <p><strong>Bot:</strong> Hello! I am your AI assistant. How are you feeling today?</p>
+            </div>
+            <div class="chat-popup-footer">
+                <input type="text" class="form-control form-control-sm" placeholder="Say something..."
+                    onkeypress="handleBotKey(event)">
+            </div>
+        </div>
+
+        <div class="bot-icon" onclick="toggleBotChat()">
+            <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+        // Toggle the Chat Box
+        function toggleBotChat() {
+            const chatWindow = document.getElementById('botChatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        // Prevent closing when clicking inside the input
+        function handleBotKey(event) {
+            if (event.key === 'Enter' && event.target.value.trim() !== "") {
+                const history = document.getElementById('chatHistory');
+                history.innerHTML += `<p class="text-end"><strong>You:</strong> ${event.target.value}</p>`;
+                event.target.value = "";
+                history.scrollTop = history.scrollHeight;
+            }
+            event.stopPropagation();
+        }
+    </script>
+</body>
+</html>

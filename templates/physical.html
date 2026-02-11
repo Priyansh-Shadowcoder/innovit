@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Circuit - Health Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --action-orange: #ff7e5f;
+            --rest-blue: #6c9bc0;
+            --success-green: #2ecc71;
+            --bg-color: #f0f4f8;
+            --primary-blue: #22689e;
+            --text-color: #2d3436;
+        }
+
+        /* Flexbox setup to keep footer at bottom */
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .main-header {
+            width: 100%;
+            background-color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .main-header h1 {
+            font-family: 'Trajan', serif;
+            margin: 0;
+            color: var(--primary-blue);
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        /* Main content wrapper */
+        .content-wrap {
+            flex: 1 0 auto;
+            padding: 40px 15px;
+        }
+
+        .workout-card {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .exercise-display {
+            height: 220px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #eee;
+            transition: background-color 0.5s ease;
+        }
+
+        #exercise-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--action-orange);
+            margin-bottom: 5px;
+        }
+
+        #exercise-procedure {
+            font-size: 0.95rem;
+            color: #636e72;
+            min-height: 45px;
+        }
+
+        #timer-countdown {
+            font-size: 3.5rem;
+            font-weight: 300;
+            font-family: monospace;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .info-panel {
+            text-align: left;
+            margin-top: 30px;
+            background: #fff9f4;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--action-orange);
+        }
+
+        /* Footer Styling */
+        .main-footer {
+            flex-shrink: 0;
+            background-color: white;
+            padding: 40px 0 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .main-footer h5 {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            color: #6c757d;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--action-orange);
+        }
+    </style>
+    <style>
+        /* --- AI BOT CUSTOM STYLES --- */
+        :root {
+            --bot-color: #0d6efd;
+            /* Matching your Bootstrap Primary color */
+        }
+
+        .bot-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        /* The Animated Icon */
+        .bot-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bot-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .bot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Blink Animation */
+        .eyes {
+            display: flex;
+            gap: 6px;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        /* Pulse Effect */
+        .bot-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--bot-color);
+            opacity: 0.4;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Chat Window Hidden State */
+        .chat-popup {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .chat-popup.active {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-popup-header {
+            background: var(--bot-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .chat-popup-body {
+            height: 250px;
+            padding: 15px;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .chat-popup-footer {
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- END BOT STYLES --- */
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <h1>PHYSICAL ACTIVITY</h1>
+    </header>
+
+    <div class="content-wrap">
+        <div class="workout-card">
+            <h2 class="mb-1">Quick Workout</h2>
+            <p class="text-muted">High Intensity • 30s Work • 10s Rest</p>
+
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar bg-warning" style="width: 0%"></div>
+            </div>
+
+            <div class="exercise-display" id="bg-box">
+                <div id="exercise-name">Ready?</div>
+                <div id="exercise-procedure">Click start to begin the workout.</div>
+                <div id="timer-countdown">00</div>
+            </div>
+
+            <button id="startBtn" class="btn btn-dark btn-lg w-100 rounded-pill py-3">START WORKOUT</button>
+
+            <div class="info-panel">
+                <h5><i class="fas fa-dumbbell"></i> Benefits & Procedure</h5>
+                <ul class="small text-muted ps-3">
+                    <li><strong>Procedure:</strong> Follow the instructions for each 30-second set. Use the 10-second
+                        rest to switch.</li>
+                    <li><strong>Benefits:</strong> Boosts metabolism and builds functional strength.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bot-wrapper">
+        <div class="chat-popup" id="botChatWindow">
+            <div class="chat-popup-header">AI Therapist 👨🏻‍⚕️</div>
+            <div class="chat-popup-body" id="chatHistory">
+                <p><strong>Bot:</strong> Hello! I am your AI assistant. How are you feeling today?</p>
+            </div>
+            <div class="chat-popup-footer">
+                <input type="text" class="form-control form-control-sm" placeholder="Say something..."
+                    onkeypress="handleBotKey(event)">
+            </div>
+        </div>
+
+        <div class="bot-icon" onclick="toggleBotChat()">
+            <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>About MINDSET ARCHITECTURE</h5>
+                    <p class="small text-muted">Empowering individuals to take control of their health through
+                        technology and data-driven insights.</p>
+                </div>
+                <div class="col-md-4 mb-4 text-center">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="footer-link small">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link small">Terms of Service</a></li>
+                        <li><a href="#" class="footer-link small">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4 text-md-end">
+                    <h5>Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#" class="text-primary me-3 fs-5"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-info me-3 fs-5"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-danger fs-5"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center text-muted small mb-0">&copy; 2026 Your Personal MINDSET ARCHITECTURE. All rights
+                reserved.</p>
+        </div>
+    </footer>
+    
+
+    <script>
+        const exercises = [
+            { name: "Jumping Jacks", procedure: "Jump feet out while swinging arms above head, then jump back." },
+            { name: "Wall Sit", procedure: "Slide back down a wall until thighs are parallel to the floor. Hold." },
+            { name: "Push-Ups", procedure: "Keep back flat and lower chest to floor. Push back up firmly." },
+            { name: "Ab Crunches", procedure: "Curl your torso toward your knees, keeping lower back on the floor." },
+            { name: "Step-ups", procedure: "Step onto a firm chair or bench and back down. Alternate legs." },
+            { name: "Squats", procedure: "Lower hips back like sitting in a chair. Keep chest up and heels down." }
+        ];
+
+        const display = document.getElementById('exercise-name');
+        const procedureDisplay = document.getElementById('exercise-procedure');
+        const timerText = document.getElementById('timer-countdown');
+        const startBtn = document.getElementById('startBtn');
+        const progressBar = document.getElementById('progress-bar');
+        const bgBox = document.getElementById('bg-box');
+
+        let isActive = false;
+
+        async function countdown(seconds, label, procedure, isRest) {
+            bgBox.style.backgroundColor = isRest ? "#e3f2fd" : "#fff5f0";
+            display.style.color = isRest ? "#6c9bc0" : "#ff7e5f";
+            display.innerText = label;
+            procedureDisplay.innerText = procedure;
+
+            for (let i = seconds; i >= 0; i--) {
+                if (!isActive) return;
+                timerText.innerText = i < 10 ? `0${i}` : i;
+                await new Promise(r => setTimeout(r, 1000));
+            }
+        }
+
+        async function startWorkout() {
+            isActive = true;
+            startBtn.disabled = true;
+            startBtn.innerText = "WORKOUT IN PROGRESS...";
+
+            for (let i = 0; i < exercises.length; i++) {
+                let progress = ((i) / exercises.length) * 100;
+                progressBar.style.width = `${progress}%`;
+
+                await countdown(30, exercises[i].name, exercises[i].procedure, false);
+
+                if (i < exercises.length - 1) {
+                    await countdown(10, "REST & PREPARE", "Next: " + exercises[i + 1].name, true);
+                }
+            }
+
+            progressBar.style.width = "100%";
+            display.innerText = "DONE!";
+            procedureDisplay.innerText = "You've completed the circuit. Great job!";
+            display.style.color = "#2ecc71";
+            timerText.innerText = "🎉";
+            startBtn.innerText = "WORKOUT COMPLETE";
+        }
+
+        startBtn.addEventListener('click', startWorkout);
+    </script>
+    <script>
+        // Toggle the Chat Box
+        function toggleBotChat() {
+            const chatWindow = document.getElementById('botChatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        // Prevent closing when clicking inside the input
+        async function handleBotKey(event) {
+    if (event.key === 'Enter' && event.target.value.trim() !== "") {
+        const userText = event.target.value;
+        const history = document.getElementById('chatHistory');
+
+        // 1. Display User Message
+        history.innerHTML += `<div class="text-end mb-2"><strong>You:</strong> ${userText}</div>`;
+        event.target.value = ""; // Clear input
+
+        try {
+            // 2. Send message to Python Flask backend
+            const response = await fetch('/get_response', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userText })
+            });
+
+            const data = await response.json();
+
+            // 3. Display Bot Response
+            history.innerHTML += `<div class="mb-2"><strong>Bot:</strong> ${data.response}</div>`;
+        } catch (error) {
+            history.innerHTML += `<div class="text-danger mb-2"><strong>Error:</strong> Could not connect to server.</div>`;
+        }
+
+        // Auto-scroll to bottom
+        history.scrollTop = history.scrollHeight;
+    }
+    event.stopPropagation();
+}
+    </script>
+</body>
+
+</html>

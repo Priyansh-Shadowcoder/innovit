@@ -1,0 +1,189 @@
+:root {
+    --primary-blue: #1e3a8a;
+    --dark-bg: #0f172a;
+    --vibrant-purple: #7c3aed;
+    --silver-light: #cbd5e1;
+    --silver-border: #475569;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+
+.sticker {
+    position: fixed;
+    z-index: -1;
+    font-size: 3rem;
+    filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.4));
+    animation: float 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-25px) rotate(10deg); }
+}
+
+.s1 { top: 10%; left: 5%; animation-delay: 0s; }
+.s2 { top: 20%; right: 5%; animation-delay: 1s; }
+.s3 { bottom: 15%; left: 7%; animation-delay: 2s; }
+.s4 { bottom: 10%; right: 10%; animation-delay: 3s; }
+.s5 { top: 50%; left: 45%; opacity: 0.1; font-size: 8rem; }
+
+
+header {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+}
+
+
+.container {
+    max-width: 1100px;
+    margin: -60px auto 60px;
+    padding: 0 20px;
+}
+
+.therapist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--silver-border);
+    border-radius: 30px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: var(--vibrant-purple);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card img {
+    width: 120px;
+    border: 3px solid var(--vibrant-purple);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    background: var(--dark-bg);
+}
+
+.tag {
+    display: inline-block;
+    background: rgba(124, 58, 237, 0.2);
+    color: var(--vibrant-purple);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+
+.appointment-section {
+    margin-top: 80px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 40px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.appointment-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 15px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--silver-border);
+    border-radius: 15px;
+    color: white;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--vibrant-purple);
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+}
+
+
+.btn {
+    background: linear-gradient(45deg, var(--vibrant-purple), #6366f1);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(124, 58, 237, 0.4);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+
+@media (max-width: 768px) {
+    .input-group { flex-direction: column; }
+    .hero-text h1 { font-size: 2.2rem; }
+}

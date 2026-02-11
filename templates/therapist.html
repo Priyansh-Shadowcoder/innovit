@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PAST MEDICAL HISTORY</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="/home">HEALTH PORTAL</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+
+                        <li class="nav-item"><a class="nav-link" href="/sheduling">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/history">Talk to an Expert! </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <style>
+            body {
+        background-color: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+            .chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 800px;
+        margin: 40px auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        overflow: hidden;
+        height: 70vh; /* Fixed height for the chat window */
+    }
+
+    .chat-header {
+        background: #4A90E2; /* Matches your portal blue */
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .chat-history {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: #ffffff;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-input-area {
+        padding: 20px;
+        border-top: 1px solid #eee;
+        background: #fdfdfd;
+    }
+
+    #userInput {
+        border-radius: 25px 0 0 25px;
+        padding: 12px 20px;
+        border: 1px solid #dfe1e5;
+    }
+
+    .btn-primary {
+        border-radius: 0 25px 25px 0;
+        padding: 0 25px;
+        background-color: #4A90E2;
+        border: none;
+    }
+
+    /* Style for message bubbles */
+    /* Message Bubble Styling */
+.chat-history {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #fdfdfd;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Adds space between bubbles */
+}
+
+.msg-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+}
+
+.user-wrapper {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.bot-wrapper {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.bubble {
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.user-bubble {
+    background-color: #4A90E2;
+    color: white;
+    border-bottom-right-radius: 2px; /* Makes it look like a tail */
+}
+
+.bot-bubble {
+    background-color: #e9ecef;
+    color: #333;
+    border-bottom-left-radius: 2px;
+}
+
+.msg-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #6c757d;
+}
+        </style>
+
+        <div class="chat-container">
+    <div class="chat-header">
+        <h3>Health Assistant</h3>
+        <p class="small text-white-50">Powered by AI</p>
+    </div>
+
+    <div id="chatHistory" class="chat-history">
+        <div class="mb-2"><strong>Bot:</strong> Hello! How can I help you with your health data today?</div>
+    </div>
+
+    <div class="chat-input-area">
+        <div class="input-group">
+            <input type="text" id="userInput" class="form-control" placeholder="Ask anything about your health..." autocomplete="off" onkeydown="handleBotKey(event)">
+            <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+        <footer class="main-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <h5>About MINDSET ARCHITECTURE</h5>
+                        <p class="small text-muted">Empowering individuals to take control of their health through
+                            technology and data-driven insights.</p>
+                    </div>
+                    <div class="col-md-4 mb-4 text-center">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-decoration-none text-muted small">Privacy Policy</a></li>
+                            <li><a href="#" class="text-decoration-none text-muted small">Terms of Service</a></li>
+                            <li><a href="#" class="text-decoration-none text-muted small">Contact Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 mb-4 text-md-end">
+                        <h5>Follow Us</h5>
+                        <div class="social-icons">
+                            <a href="#" class="text-primary me-3"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-info me-3"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-danger"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <p class="text-center text-muted small mb-0">&copy; 2026 Your Personal MINDSET ARCHITECTURE. All rights
+                    reserved.
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous">
+        </script>
+        <script>
+        function toggleBotChat() {
+        const chatWindow = document.getElementById('botChatWindow');
+        chatWindow.classList.toggle('active');
+    }
+        async function handleBotKey(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+async function sendMessage() {
+    const inputField = document.getElementById('userInput');
+    const userText = inputField.value.trim();
+    const history = document.getElementById('chatHistory');
+
+    if (userText === "") return;
+
+    // Add User Bubble
+    history.innerHTML += `
+        <div class="msg-wrapper user-wrapper">
+            <span class="msg-label">You</span>
+            <div class="bubble user-bubble">${userText}</div>
+        </div>`;
+    
+    inputField.value = "";
+    const typingId = "typing-" + Date.now();
+    
+    // Add Bot "Thinking" Bubble
+    history.innerHTML += `
+        <div class="msg-wrapper bot-wrapper" id="${typingId}">
+            <span class="msg-label">Mindset AI</span>
+            <div class="bubble bot-bubble"><em>Analyzing...</em></div>
+        </div>`;
+    
+    history.scrollTop = history.scrollHeight;
+
+    try {
+        const response = await fetch('/get_response', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userText })
+        });
+
+        const data = await response.json();
+        const typingElement = document.getElementById(typingId);
+        
+        // Use .response from your Flask jsonify
+        // We replace newlines with <br> so the AI's formatting stays pretty
+        const formattedResponse = data.response.replace(/\n/g, '<br>');
+        typingElement.querySelector('.bubble').innerHTML = formattedResponse;
+        
+    } catch (error) {
+        const typingElement = document.getElementById(typingId);
+        typingElement.querySelector('.bubble').innerHTML = `<span class="text-danger">Sorry, I'm having trouble connecting to the mindset server.</span>`;
+    }
+
+    history.scrollTop = history.scrollHeight;
+}
+    </script>
+</body>
+
+</html>

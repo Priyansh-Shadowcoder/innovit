@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="technology driven solution for challenges faced by India's 
+        cultural heritage">
+  <meta name="keywords" content="HTML, CSS, Python">
+  <meta name="author" content="Aaryan Saxena, priyansh Singh">
+  <title>Your Personal Health Manager</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+        /* --- AI BOT CUSTOM STYLES --- */
+        :root {
+            --bot-color: #0d6efd;
+            /* Matching your Bootstrap Primary color */
+        }
+
+        .bot-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        /* The Animated Icon */
+        .bot-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bot-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .bot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Blink Animation */
+        .eyes {
+            display: flex;
+            gap: 6px;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        /* Pulse Effect */
+        .bot-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--bot-color);
+            opacity: 0.4;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Chat Window Hidden State */
+        .chat-popup {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .chat-popup.active {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-popup-header {
+            background: var(--bot-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .chat-popup-body {
+            height: 250px;
+            padding: 15px;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .chat-popup-footer {
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- END BOT STYLES --- */
+    </style>
+
+</head>
+
+<body>
+
+  <header class="main-header">
+    <h1>Work On Your Mental Health, One Session At A Time!</h1>
+  </header>
+      <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/home">HEALTH PORTAL</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/therapists">Therapist</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/history">Past Records</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+  <br>
+  <h2 style="color:#428bca; text-align:center;" class="display-5 fw-bold mb-4">I told my mind to relax; it replied, “I'm already too tense for that!”</h2>
+  <br>
+  <p style="font-size: 22px; text-align:center;" class="display-7 fw-bold mb-4"><b>Here are 8 mental health exercises to help your mind to lowkey drop all that negative aura of being tense and change the drip to relax vibes..... </b></p>
+  <br>
+  <br>
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='6.jpeg') }}" class="card-img-top" alt="mindfulness">
+        <div class="card-body">
+          <h5 class="card-title">Mindfulness</h5>
+          <p class="card-text">It's an effective exercise that involves fully engaging with the present moment.
+             Put simply, it means being fully aware of your thoughts, emotions, and sensations without judgment.</p>
+          <a href="/mindfullness" class="btn btn-primary">Start Exercise</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='5.jpeg') }}" class="card-img-top" alt="Meditation">
+        <div class="card-body">
+          <h5 class="card-title">Meditation</h5>
+          <p class="card-text">Meditation is a deeper form of mindfulness that involves focused attention
+            and mental stillness. It helps clear your mind of clutter, reduce anxiety, and achieve
+            emotional balance.</p>
+          <a href="/meditation" class="btn btn-primary">Start Exercise</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='4.jpeg') }}" class="card-img-top"
+          alt="Gratitude Journaling">
+        <div class="card-body">
+          <h5 class="card-title">Gratitude Journaling</h5>
+          <p class="card-text">Writing down things you are thankful for can enhance your mood and emotional
+            wellbeing. It redirects your focus from what's lacking or stressful to what's abundant and
+            positive in your life.</p>
+          <a href="/gratitude" class="btn btn-primary">Start Exercise</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='8.jpeg') }}" class="card-img-top" alt="Breathing Exercises">
+        <div class="card-body">
+          <h5 class="card-title">Breathing Exercises</h5>
+          <p class="card-text">Conscious breathing exercises can be an instant stress reliever and are
+             incredibly easy to perform. As a bonus, they're good for your physical fitness as well.</p>
+          <a href="/breathing" class="btn btn-primary">Start Exercise</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='7.jpeg') }}" class="card-img-top" alt="Physical activity">
+        <div class="card-body">
+          <h5 class="card-title">Physical activity</h5>
+          <p class="card-text">We know — we said we were focusing on mind over body. But never underestimate 
+            the power of a good workout for your mental health. Physical exercise releases chemicals in the 
+            brain that naturally lift your mood.</p>
+          <a href="/physical" class="btn btn-primary">Start Exercise</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='2.jpeg') }}" class="card-img-top" alt="Cognitive reframing">
+        <div class="card-body">
+          <h5 class="card-title">Cognitive reframing</h5>
+          <p class="card-text">Practice changing negative or intrusive thoughts into more positive or 
+            neutral ones. This exercise can help you become more resilient and better equipped to handle
+             stress.</p>
+          <a href="/cognitive" class="btn btn-primary">Start Exercise</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='1.jpeg') }}" class="card-img-top" alt="Sleep">
+        <div class="card-body">
+          <h5 class="card-title">Sleep'</h5>
+          <p class="card-text">Quality sleep is an essential yet often overlooked mental health exercise.
+             Yes, a nap can be a form of exercise! More importantly, a good night's sleep can significantly 
+             improve your mood, memory, and ability to handle stress.</p>
+          <a href="/sleep" class="btn btn-primary">Start Exercise</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='3.jpeg') }}" class="card-img-top" alt="Connect with others and with nature">
+        <div class="card-body">
+          <h5 class="card-title">Connect with others and with nature</h5>
+          <p class="card-text">Fostering social connections and spending time outdoors are proven ways to improve mental wellbeing. </p>
+          <a href="/connect" class="btn btn-primary">Start Exercise</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bot-wrapper">
+        <div class="chat-popup" id="botChatWindow">
+            <div class="chat-popup-header">AI Therapist 👨🏻‍⚕️</div>
+            <div class="chat-popup-body" id="chatHistory">
+                <p><strong>Bot:</strong> Hello! I am your AI assistant. How are you feeling today?</p>
+            </div>
+            <div class="chat-popup-footer">
+                <input type="text" class="form-control form-control-sm" placeholder="Say something..."
+                    onkeypress="handleBotKey(event)">
+            </div>
+        </div>
+
+        <div class="bot-icon" onclick="toggleBotChat()">
+            <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+    </div>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>About MINDSET ARCHITECTURE</h5>
+                    <p class="small text-muted">Empowering individuals to take control of their health through
+                        technology and data-driven insights.</p>
+                </div>
+                <div class="col-md-4 mb-4 text-center">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-muted small">Privacy Policy</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted small">Terms of Service</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted small">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4 text-md-end">
+                    <h5>Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#" class="text-primary me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-info me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-danger"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center text-muted small mb-0">&copy; 2026 Your Personal MINDSET ARCHITECTURE. All rights
+                reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // Toggle the Chat Box
+        function toggleBotChat() {
+            const chatWindow = document.getElementById('botChatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        // Prevent closing when clicking inside the input
+        function handleBotKey(event) {
+            if (event.key === 'Enter' && event.target.value.trim() !== "") {
+                const history = document.getElementById('chatHistory');
+                history.innerHTML += `<p class="text-end"><strong>You:</strong> ${event.target.value}</p>`;
+                event.target.value = "";
+                history.scrollTop = history.scrollHeight;
+            }
+            event.stopPropagation();
+        }
+    </script>
+
+</body>
+</html>

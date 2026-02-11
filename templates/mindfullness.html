@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Technology driven solution for personal health and mindfulness.">
+    <title>Your Personal Health Manager</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --primary-blue: #6c9bc0;
+            --dark-blue: #4a7c9d;
+            --text-color: #2d3436;
+            --accent-green: #a8dadc;
+        }
+
+        /* 1. Fix Body to allow footer to stay at bottom */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            /* This keeps footer at bottom */
+        }
+
+        /* 2. Full-Width Header */
+        .main-header {
+            width: 100%;
+            background-color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .main-header h1 {
+            font-family: Trajan, serif;
+            margin: 0;
+            color: var(--primary-blue);
+            letter-spacing: 2px;
+        }
+
+        /* 3. Content Area */
+        .content-wrapper {
+            flex: 1 0 auto;
+            /* Grows to fill space, pushing footer down */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .mindfulness-card {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Animation Styles */
+        .viz-container {
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .focus-engine {
+            position: relative;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: radial-gradient(circle, #f0fdfa 0%, #f8fafc 100%);
+            border-radius: 20px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .flash-center {
+            width: 12px;
+            height: 12px;
+            background: #6c9bc0;
+            /* Teal Accent */
+            border-radius: 50%;
+            box-shadow: 0 0 20px 5px #6c9bc0;
+            animation: radiant-pulse-light 6s infinite ease-in-out;
+        }
+
+        @keyframes radiant-pulse-light {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px 5px #6c9bc0;
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: scale(25);
+                /* Creates the "Flash" expansion effect */
+                box-shadow: 0 0 50px 20px #6c9bc0, 0 0 120px 40px rgba(255, 255, 255, 1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px 5px #6c9bc0;
+                opacity: 0.4;
+            }
+        }
+
+        #instruction {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            min-height: 40px;
+        }
+
+        .explanation {
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 30px;
+        }
+
+        .step {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 3px solid var(--accent-green);
+        }
+
+        /* 4. Full-Width Footer */
+        .main-footer {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 40px 0 20px 0;
+            border-top: 1px solid #eee;
+            flex-shrink: 0;
+            /* Prevents footer from squishing */
+        }
+    </style>
+    <style>
+        /* --- AI BOT CUSTOM STYLES --- */
+        :root {
+            --bot-color: #0d6efd;
+            /* Matching your Bootstrap Primary color */
+        }
+
+        .bot-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        /* The Animated Icon */
+        .bot-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bot-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .bot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Blink Animation */
+        .eyes {
+            display: flex;
+            gap: 6px;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        /* Pulse Effect */
+        .bot-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--bot-color);
+            opacity: 0.4;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Chat Window Hidden State */
+        .chat-popup {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .chat-popup.active {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-popup-header {
+            background: var(--bot-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .chat-popup-body {
+            height: 250px;
+            padding: 15px;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .chat-popup-footer {
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- END BOT STYLES --- */
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <h1>MINDFULNESS</h1>
+    </header>
+
+    <main class="content-wrapper">
+
+
+        <div class="mindfulness-card">
+            <h2>Phew! RELAX</h2>
+            <p class="text-muted">I told my lazy eye to focus; it said, "Nah"</p>
+
+            <div class="focus-engine">
+                <div class="flash-center"></div>
+            </div>
+
+
+            <div class="explanation">
+                <h4>How to Practice Mindfulness</h4>
+                <p>Mindfulness is the act of being present. Just focus on the present self and remove all
+                    the other worries and tensions you have.</p>
+
+                <div class="step"><strong>Past:</strong> It's there just so you can learn from your mistakes.</div>
+                <div class="step"><strong>Present:</strong>It's what you have right now.</div>
+                <div class="step"><strong>Future:</strong> It's just a boat full of hopes.</div>
+                <div class="step"><strong>Confused?<br></strong> Just close your eyes and try not to think
+                    of anything or focus on the flash of light here and release all the pressure you put on your mind.
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="bot-wrapper">
+        <div class="chat-popup" id="botChatWindow">
+            <div class="chat-popup-header">AI Therapist 👨🏻‍⚕️</div>
+            <div class="chat-popup-body" id="chatHistory">
+                <p><strong>Bot:</strong> Hello! I am your AI assistant. How are you feeling today?</p>
+            </div>
+            <div class="chat-popup-footer">
+                <input type="text" class="form-control form-control-sm" placeholder="Say something..."
+                    onkeypress="handleBotKey(event)">
+            </div>
+        </div>
+
+        <div class="bot-icon" onclick="toggleBotChat()">
+            <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>About MINDSET ARCHITECTURE</h5>
+                    <p class="small text-muted">Empowering individuals to take control of their health through
+                        technology and data-driven insights.</p>
+                </div>
+                <div class="col-md-4 mb-4 text-center">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-muted small">Privacy Policy</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted small">Terms of Service</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted small">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4 text-md-end">
+                    <h5>Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#" class="text-primary me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-info me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-danger"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center text-muted small mb-0">&copy; 2026 Your Personal MINDSET ARCHITECTURE. All rights
+                reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const circle = document.getElementById('circle');
+        const instruction = document.getElementById('instruction');
+        let isActive = false;
+
+        function runAnimation() {
+            if (!isActive) return;
+
+            instruction.innerText = "Inhale slowly...";
+            circle.style.transform = "scale(2.2)";
+            circle.innerText = "Inhale";
+
+            setTimeout(() => {
+                if (!isActive) return;
+                instruction.innerText = "Gently hold...";
+                circle.innerText = "Hold";
+
+                setTimeout(() => {
+                    if (!isActive) return;
+                    instruction.innerText = "Exhale fully...";
+                    circle.style.transform = "scale(1)";
+                    circle.innerText = "Exhale";
+
+                    setTimeout(() => {
+                        if (!isActive) return;
+                        instruction.innerText = "Rest and pause...";
+                        circle.innerText = "Pause";
+
+                        setTimeout(runAnimation, 4000);
+                    }, 4000);
+                }, 4000);
+            }, 4000);
+        }
+
+        circle.addEventListener('click', () => {
+            if (!isActive) {
+                isActive = true;
+                runAnimation();
+            } else {
+                isActive = false;
+                circle.style.transform = "scale(1)";
+                circle.innerText = "Start";
+                instruction.innerText = "Click to resume";
+            }
+        });
+    </script>
+    <script>
+        // Toggle the Chat Box
+        function toggleBotChat() {
+            const chatWindow = document.getElementById('botChatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        // Prevent closing when clicking inside the input
+        async function handleBotKey(event) {
+    if (event.key === 'Enter' && event.target.value.trim() !== "") {
+        const userText = event.target.value;
+        const history = document.getElementById('chatHistory');
+
+        // 1. Display User Message
+        history.innerHTML += `<div class="text-end mb-2"><strong>You:</strong> ${userText}</div>`;
+        event.target.value = ""; // Clear input
+
+        try {
+            // 2. Send message to Python Flask backend
+            const response = await fetch('/get_response', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userText })
+            });
+
+            const data = await response.json();
+
+            // 3. Display Bot Response
+            history.innerHTML += `<div class="mb-2"><strong>Bot:</strong> ${data.response}</div>`;
+        } catch (error) {
+            history.innerHTML += `<div class="text-danger mb-2"><strong>Error:</strong> Could not connect to server.</div>`;
+        }
+
+        // Auto-scroll to bottom
+        history.scrollTop = history.scrollHeight;
+    }
+    event.stopPropagation();
+}
+    </script>
+</body>
+
+</html>

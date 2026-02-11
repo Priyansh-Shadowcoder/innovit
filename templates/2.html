@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Glow Up Kit | Proud Librarian</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Spicy+Rice&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='2.css') }}">
+    <style>
+        /* --- AI BOT CUSTOM STYLES --- */
+        :root {
+            --bot-color: #0d6efd;
+            /* Matching your Bootstrap Primary color */
+        }
+
+        .bot-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        /* The Animated Icon */
+        .bot-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bot-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .bot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Blink Animation */
+        .eyes {
+            display: flex;
+            gap: 6px;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        /* Pulse Effect */
+        .bot-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--bot-color);
+            opacity: 0.4;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Chat Window Hidden State */
+        .chat-popup {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .chat-popup.active {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-popup-header {
+            background: var(--bot-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        .chat-popup-body {
+            height: 250px;
+            padding: 15px;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .chat-popup-footer {
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- END BOT STYLES --- */
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="sticker-container">
+                <img src="{{ url_for('static', filename='librarian-sticker.png') }}" alt="Proud Librarian" class="main-sticker">
+            </div>
+            <h1>Mental Glow Up Kit</h1>
+            <p>Your guide to understanding mental wellness</p>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="info-card">
+            <h2 class="title-purple">🦋 What is Mental Health?</h2>
+            <p>Mental health includes our emotional, psychological, and social well-being. It is the foundation of how we think, feel, and behave. Just like we go to the gym for our bodies, we need a <strong>Mental Glow Up</strong> for our minds.</p>
+        </section>
+
+        <section class="info-card">
+            <div class="sticker-right">
+                <img src="{{ url_for('static', filename='reading-sticker.png') }}" alt="Reading is Mental Health" class="small-sticker">
+            </div>
+            <h2 class="title-blue">📖 Why is it Important?</h2>
+            <ul class="check-list">
+                <li><strong>Better Focus:</strong> Helps you study and read more effectively.</li>
+                <li><strong>Stress Control:</strong> Teaches you how to handle life's "glitches."</li>
+                <li><strong>Self-Love:</strong> Build a positive relationship with yourself.</li>
+            </ul>
+        </section>
+
+        <section class="info-card">
+            <h2 class="title-silver">⚠️ Common Mental Health Issues</h2>
+            <div class="issue-grid">
+                <div class="issue-item">
+                    <h3>Anxiety</h3>
+                    <p>Feeling nervous or worried about the future.</p>
+                </div>
+                <div class="issue-item">
+                    <h3>Burnout</h3>
+                    <p>Total exhaustion from working or studying too hard.</p>
+                </div>
+                <div class="issue-item">
+                    <h3>Depression</h3>
+                    <p>Feeling very sad or low for a long period of time.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <div class="bot-wrapper">
+        <div class="chat-popup" id="botChatWindow">
+            <div class="chat-popup-header">AI Therapist 👨🏻‍⚕️</div>
+            <div class="chat-popup-body" id="chatHistory">
+                <p><strong>Bot:</strong> Hello! I am your AI assistant. How are you feeling today?</p>
+            </div>
+            <div class="chat-popup-footer">
+                <input type="text" class="form-control form-control-sm" placeholder="Say something..."
+                    onkeypress="handleBotKey(event)">
+            </div>
+        </div>
+
+        <div class="bot-icon" onclick="toggleBotChat()">
+            <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Stay Bright, Stay Mindful 💜</p>
+    </footer>
+    <script>
+        // Toggle the Chat Box
+        function toggleBotChat() {
+            const chatWindow = document.getElementById('botChatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        // Prevent closing when clicking inside the input
+        function handleBotKey(event) {
+            if (event.key === 'Enter' && event.target.value.trim() !== "") {
+                const history = document.getElementById('chatHistory');
+                history.innerHTML += `<p class="text-end"><strong>You:</strong> ${event.target.value}</p>`;
+                event.target.value = "";
+                history.scrollTop = history.scrollHeight;
+            }
+            event.stopPropagation();
+        }
+    </script>
+
+</body>
+</html>
