@@ -14,7 +14,11 @@ client = OpenAI(
 )
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///health.db"
+basedir = os.path.abspath(os.path.dirname(__file__))
+if os.environ.get('RENDER'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join('/tmp', 'health.db')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///health.db"
 app.config['SQLALCHEMY_DATABASE_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
@@ -307,4 +311,5 @@ with app.app_context():
 if __name__ == "__main__":
     app.run(debug=True)
   
+
 
