@@ -10,7 +10,7 @@ load_dotenv()
 
 client = OpenAI(
   base_url="https://openrouter.ai/api/v1",
-  api_key="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", 
+  api_key=os.getenv("OPENROUTER_API_KEY"),, 
 )
 
 app = Flask(__name__)
@@ -311,5 +311,6 @@ with app.app_context():
 if __name__ == "__main__":
     app.run(debug=True)
   
+
 
 
